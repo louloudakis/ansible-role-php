@@ -11,6 +11,22 @@
   register: php_package_install
   notify: restart webserver
 
+- name: Ensure php log dir exists
+  file:
+    path: /var/log/php
+    owner: "{{ __php_fpm_pool_user }}"
+    group: "{{ __php_fpm_pool_group }}"
+    state: directory
+    mode: 0755
+
+- name: Ensure php tmp dir exists
+  file:
+    path: /tmp/www
+    owner: "{{ __php_fpm_pool_user }}"
+    group: "{{ __php_fpm_pool_group }}"
+    state: directory
+    mode: 0755
+
 - name: Delete APCu configuration file if this role will provide one.
   file:
     path: "{{ item }}/{{ php_apc_conf_filename }}"
