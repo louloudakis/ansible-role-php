@@ -19,13 +19,6 @@
   notify: restart webserver
   when: php_use_managed_ini
 
-- name: Ensure www user can write to log directory.
-  file:
-    path: /var/log/php
-    group: "{{ __php_fpm_pool_group }}"
-    mode: 0774
-    state: directory
-
 - name: Ensure logs are rotated.
   template:
     src: logrotate.php.j2
@@ -33,4 +26,3 @@
     owner: root
     group: root
     mode: 0644
-
